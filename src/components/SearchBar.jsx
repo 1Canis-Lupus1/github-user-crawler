@@ -5,6 +5,8 @@ export class SearchBar extends Component {
     super(props);
     this.state = {
       parameter: "",
+      userNotFound: false,
+      userAfterSearch: false,
     };
   }
 
@@ -15,14 +17,21 @@ export class SearchBar extends Component {
         `https://api.github.com/users/${this.state.parameter}`
       );
       let displayData = await userData.json();
-      console.log("Data is now:", displayData);
+      if (displayData.message === "Not Found") {
+        // console.log("User Not Found");
+        this.setState({
+          userNotFound: true,
+        });
+      } else {
+        console.log("Data is now:", displayData);
+        this.setState({ userNotFound:false,userAfterSearch: true });
+      }
     }
   }
 
   render() {
     return (
       <div>
-        <h2>Search bar Here</h2>
         <input
           type="text"
           value={this.state.parameter}
@@ -34,11 +43,31 @@ export class SearchBar extends Component {
               },
               () => {
                 this.componentDidMount();
-                // console.log("After Set State:",this.state.parameter)
               }
             );
           }}
         />
+        {!this.state.parameter && <h2>Empty Search bar</h2>}
+        {this.state.userNotFound && (
+          <>
+            <div class="card text-center">
+              <div class="card-header">Featured</div>
+              <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">
+                  USER NOT FOUND
+                </p>
+                <a href="#" class="btn btn-primary">
+                  Go somewhere
+                </a>
+              </div>
+              <div class="card-footer text-muted">2 days ago</div>
+            </div>
+          </>
+        )}
+        {this.state.userAfterSearch && (
+            <h2>User Details here</h2>
+        )}
       </div>
     );
   }
