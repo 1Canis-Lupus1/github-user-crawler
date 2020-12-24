@@ -4,6 +4,7 @@ export class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       parameter: "",
       userNotFound: false,
       userAfterSearch: false,
@@ -13,6 +14,9 @@ export class SearchBar extends Component {
   async componentDidMount() {
     // console.log("Search the Github API with ",this.state.parameter)
     if (this.state.parameter) {
+      this.setState({
+        isLoading: true,
+      });
       let userData = await fetch(
         `https://api.github.com/users/${this.state.parameter}`
       );
@@ -20,12 +24,24 @@ export class SearchBar extends Component {
       if (displayData.message === "Not Found") {
         // console.log("User Not Found");
         this.setState({
+          isLoading: false,
           userNotFound: true,
+          userAfterSearch: false,
         });
       } else {
         console.log("Data is now:", displayData);
-        this.setState({ userNotFound:false,userAfterSearch: true });
+        this.setState({
+          isLoading: false,
+          userNotFound: false,
+          userAfterSearch: true,
+        });
       }
+    }
+    else{
+        this.setState({
+            userNotFound:false,
+            userAfterSearch:false
+        })
     }
   }
 
@@ -36,6 +52,7 @@ export class SearchBar extends Component {
           type="text"
           value={this.state.parameter}
           placeholder="Enter Github Username Here"
+          style={{margin:"10px"}}
           onChange={(e) => {
             this.setState(
               {
@@ -46,28 +63,38 @@ export class SearchBar extends Component {
               }
             );
           }}
-        />
-        {!this.state.parameter && <h2>Empty Search bar</h2>}
-        {this.state.userNotFound && (
+        /><br/>
+        {this.state.isLoading && (
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden"></span>
+          </div>
+        )}
+        {!this.state.isLoading && !this.state.parameter && !this.state.userNotFound && !this.state.userAfterSearch && (
+          <div
+            class="card text-white bg-success mb-3"
+            style={{ margin: "10px 40px" }}
+          >
+            <div class="card-header">Welcome To Github User Search</div>
+            <div class="card-body">
+              <h5 class="card-title">How To Use</h5>
+              <p class="card-text">
+                Start Typing in the search bar to get the user info and press
+                "Enter" to add the searched User to the display list
+              </p>
+            </div>
+          </div>
+        )}
+        {!this.state.isLoading && this.state.userNotFound && (
           <>
-            <div class="card text-center">
-              <div class="card-header">Featured</div>
+            <div class="card text-center" style={{margin:"10px 40px"}}>
               <div class="card-body">
                 <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">
-                  USER NOT FOUND
-                </p>
-                <a href="#" class="btn btn-primary">
-                  Go somewhere
-                </a>
+                <p class="card-text">USER NOT FOUND</p>
               </div>
-              <div class="card-footer text-muted">2 days ago</div>
             </div>
           </>
         )}
-        {this.state.userAfterSearch && (
-            <h2>User Details here</h2>
-        )}
+        {!this.state.isLoading && this.state.userAfterSearch && <h2>User Details here</h2>}
       </div>
     );
   }
