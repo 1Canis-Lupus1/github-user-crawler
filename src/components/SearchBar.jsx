@@ -11,6 +11,8 @@ export class SearchBar extends Component {
       displayName: "",
       displayID: "",
       displayPic: "",
+      displayFollowers: 0,
+      displayFollowing: 0,
       displayRepoCount: 0,
     };
   }
@@ -43,6 +45,8 @@ export class SearchBar extends Component {
           displayID: displayData.id,
           displayPic: displayData.avatar_url,
           displayRepoCount: displayData.public_repos,
+          displayFollowers: displayData.followers,
+          displayFollowing: displayData.following,
         });
       }
     } else {
@@ -51,6 +55,11 @@ export class SearchBar extends Component {
         userAfterSearch: false,
       });
     }
+  }
+
+  handleAdd=()=>{
+      const {displayID,displayName,displayPic,displayRepoCount,displayFollowers,displayFollowing}=this.state;
+      console.log("Adding Values to localstorage with key:",displayID,displayName,displayPic,displayRepoCount,displayFollowers,displayFollowing)
   }
 
   render() {
@@ -102,11 +111,11 @@ export class SearchBar extends Component {
                       Start typing in the <strong>"Search Bar"</strong> to get
                       the Github User Information,{" "}
                       <strong>One At A Time</strong>.<br />
-                      Press{" "}
+                      Click on{" "}
                       <strong>
-                        <u>Enter key</u>
+                        <u>Add To List</u>
                       </strong>{" "}
-                      for adding the current user to your{" "}
+                      button for adding the current user to your{" "}
                       <strong>Display Table</strong>.
                     </h5>
                   </div>
@@ -136,14 +145,114 @@ export class SearchBar extends Component {
         )}
         {!this.state.isLoading && this.state.userAfterSearch && (
           <>
-            <img
-              src={this.state.displayPic}
-              style={{ margin: "5px" }}
-              className="rounded"
-              alt={this.state.displayName}
-            />
-            Name: {this.state.displayName?this.state.displayName:<strong>N/A</strong>}
-            Id: {this.state.displayID}
+            <div class="card mb-3" style={{ margin: "10px 100px" }}>
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img
+                    src={this.state.displayPic}
+                    alt={this.state.displayName}
+                    style={{
+                      height: "250px",
+                      border: "2px dotted black",
+                      margin: "50px",
+                    }}
+                  />
+                  <p class="card-text" style={{ margin: "0px" }}>
+                    <small class="text-muted">
+                      <u>
+                        Last updated {Math.floor(Math.random() * 3) + 1} mins
+                        ago
+                      </u>
+                    </small>
+                  </p>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <span
+                        class="badge bg-dark"
+                        style={{ color: "whitesmoke", padding: "5px" }}
+                      >
+                        Name :
+                      </span>
+                      {this.state.displayName ? (
+                        <strong style={{ fontSize: "25px" }}>
+                          &nbsp;{this.state.displayName}
+                        </strong>
+                      ) : (
+                        <strong>&nbsp;N/A</strong>
+                      )}
+                    </h5>
+
+                    <p class="card-text">
+                      <ul style={{ listStyle: "none" }}>
+                        <li class="alert alert-primary">
+                          <span
+                            class="badge bg-light text-dark"
+                            style={{ fontSize: "20px", marginLeft: "0px" }}
+                          >
+                            User Id
+                          </span>{" "}
+                          :{" "}
+                          {this.state.displayID ? (
+                            <strong>{this.state.displayID}</strong>
+                          ) : (
+                            <strong>N/A</strong>
+                          )}
+                        </li>
+                        <li class="alert alert-success">
+                          <span
+                            class="badge bg-light text-dark"
+                            style={{ fontSize: "20px" }}
+                          >
+                            Followers
+                          </span>{" "}
+                          :{" "}
+                          {this.state.displayFollowers ? (
+                            <strong>{this.state.displayFollowers}</strong>
+                          ) : (
+                            <strong>N/A</strong>
+                          )}
+                        </li>
+                        <li class="alert alert-warning">
+                          <span
+                            class="badge bg-light text-dark"
+                            style={{ fontSize: "20px" }}
+                          >
+                            Following
+                          </span>{" "}
+                          :{" "}
+                          {this.state.displayFollowing ? (
+                            <strong>{this.state.displayFollowing}</strong>
+                          ) : (
+                            <strong>N/A</strong>
+                          )}
+                        </li>
+                        <li class="alert alert-info">
+                          <span
+                            class="badge bg-light text-dark"
+                            style={{ fontSize: "20px" }}
+                          >
+                            Repositories
+                          </span>{" "}
+                          :{" "}
+                          {this.state.displayRepoCount ? (
+                            <strong>{this.state.displayRepoCount}</strong>
+                          ) : (
+                            <strong>NULL</strong>
+                          )}
+                        </li>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                          <button class="btn btn-outline-success" onClick={this.handleAdd} type="button">
+                            Add To List
+                          </button>
+                        </div>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </>
         )}
       </div>
