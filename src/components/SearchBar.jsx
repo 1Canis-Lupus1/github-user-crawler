@@ -36,12 +36,11 @@ export class SearchBar extends Component {
           userAfterSearch: true,
         });
       }
-    }
-    else{
-        this.setState({
-            userNotFound:false,
-            userAfterSearch:false
-        })
+    } else {
+      this.setState({
+        userNotFound: false,
+        userAfterSearch: false,
+      });
     }
   }
 
@@ -52,7 +51,7 @@ export class SearchBar extends Component {
           type="text"
           value={this.state.parameter}
           placeholder="Enter Github Username Here"
-          style={{margin:"10px"}}
+          style={{ margin: "10px 40px", width: "500px", padding: "10px" }}
           onChange={(e) => {
             this.setState(
               {
@@ -63,30 +62,52 @@ export class SearchBar extends Component {
               }
             );
           }}
-        /><br/>
+        />
+        <br />
         {this.state.isLoading && (
           <div class="spinner-grow" role="status">
             <span class="visually-hidden"></span>
           </div>
         )}
-        {!this.state.isLoading && !this.state.parameter && !this.state.userNotFound && !this.state.userAfterSearch && (
-          <div
-            class="card text-white bg-success mb-3"
-            style={{ margin: "10px 40px" }}
-          >
-            <div class="card-header">Welcome To Github User Search</div>
-            <div class="card-body">
-              <h5 class="card-title">How To Use</h5>
-              <p class="card-text">
-                Start Typing in the search bar to get the user info and press
-                "Enter" to add the searched User to the display list
-              </p>
+        {!this.state.isLoading &&
+          !this.state.parameter &&
+          !this.state.userNotFound &&
+          !this.state.userAfterSearch && (
+            <div
+              class="card text-white bg-dark mb-3"
+              style={{ margin: "10px 40px" }}
+            >
+              <div class="card-header">
+                <strong>Welcome To Github User Search</strong>
+              </div>
+              <div class="card-body">
+                <h5
+                  class="card-title badge bg-warning"
+                  style={{ fontSize: "20px", color: "black" }}
+                >
+                  How To Use
+                </h5>
+                <div class="card border-success mb-3">
+                  <div class="card-body text-success">
+                    <h5 class="card-title">
+                      Start typing in the <strong>"Search Bar"</strong> to get
+                      the Github User Information,{" "}
+                      <strong>One At A Time</strong>.<br />
+                      Press{" "}
+                      <strong>
+                        <u>Enter key</u>
+                      </strong>{" "}
+                      for adding the current user to your{" "}
+                      <strong>Display Table</strong>.
+                    </h5>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {!this.state.isLoading && this.state.userNotFound && (
           <>
-            <div class="card text-center" style={{margin:"10px 40px"}}>
+            <div class="card text-center" style={{ margin: "10px 40px" }}>
               <div class="card-body">
                 <h5 class="card-title">Special title treatment</h5>
                 <p class="card-text">USER NOT FOUND</p>
@@ -94,7 +115,9 @@ export class SearchBar extends Component {
             </div>
           </>
         )}
-        {!this.state.isLoading && this.state.userAfterSearch && <h2>User Details here</h2>}
+        {!this.state.isLoading && this.state.userAfterSearch && (
+          <h2>User Details here</h2>
+        )}
       </div>
     );
   }
