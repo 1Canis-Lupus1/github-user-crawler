@@ -8,6 +8,10 @@ export class SearchBar extends Component {
       parameter: "",
       userNotFound: false,
       userAfterSearch: false,
+      displayName: "",
+      displayID: "",
+      displayPic: "",
+      displayRepoCount: 0,
     };
   }
 
@@ -18,11 +22,12 @@ export class SearchBar extends Component {
         isLoading: true,
       });
       let userData = await fetch(
-        `https://api.github.com/users/${this.state.parameter}`
+        `https://api.github.com/users/${this.state.parameter
+          .toLowerCase()
+          .trim()}`
       );
       let displayData = await userData.json();
       if (displayData.message === "Not Found") {
-        // console.log("User Not Found");
         this.setState({
           isLoading: false,
           userNotFound: true,
@@ -34,6 +39,10 @@ export class SearchBar extends Component {
           isLoading: false,
           userNotFound: false,
           userAfterSearch: true,
+          displayName: displayData.name,
+          displayID: displayData.id,
+          displayPic: displayData.avatar_url,
+          displayRepoCount: displayData.public_repos,
         });
       }
     } else {
@@ -75,7 +84,7 @@ export class SearchBar extends Component {
           !this.state.userAfterSearch && (
             <div
               class="card text-white bg-dark mb-3"
-              style={{ margin: "10px 40px" }}
+              style={{ margin: "10px 100px" }}
             >
               <div class="card-header">
                 <strong>Welcome To Github User Search</strong>
@@ -109,7 +118,7 @@ export class SearchBar extends Component {
           <>
             <div
               class="card border-danger mb-3"
-              style={{ margin: "10px 40px" }}
+              style={{ margin: "10px 200px" }}
             >
               <div
                 class="card-header badge bg-danger"
@@ -126,7 +135,16 @@ export class SearchBar extends Component {
           </>
         )}
         {!this.state.isLoading && this.state.userAfterSearch && (
-          <h2>User Details here</h2>
+          <>
+            <img
+              src={this.state.displayPic}
+              style={{ margin: "5px" }}
+              className="rounded"
+              alt={this.state.displayName}
+            />
+            Name: {this.state.displayName?this.state.displayName:<strong>N/A</strong>}
+            Id: {this.state.displayID}
+          </>
         )}
       </div>
     );
