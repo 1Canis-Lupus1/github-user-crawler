@@ -107,10 +107,20 @@ export class SearchBar extends Component {
           )}
         {!this.state.isLoading && this.state.userNotFound && (
           <>
-            <div class="card text-center" style={{ margin: "10px 40px" }}>
-              <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">USER NOT FOUND</p>
+            <div
+              class="card border-danger mb-3"
+              style={{ margin: "10px 40px" }}
+            >
+              <div
+                class="card-header badge bg-danger"
+                style={{ fontSize: "20px", color: "whitesmoke" }}
+              >
+                User Not Found
+              </div>
+              <div class="card-body text-danger">
+                <h5 class="card-title">
+                  Check if you have spelled the name correctly
+                </h5>
               </div>
             </div>
           </>
