@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 export class DisplayTable extends Component {
   constructor(props) {
@@ -57,7 +58,11 @@ export class DisplayTable extends Component {
         <h2 class="alert alert-info">My User List</h2>
         {this.state.userList.length === 0 ? (
           <div class="card border-danger mb-3">
-            <div class="card-header">No User To Display</div>
+            <div class="card-header">
+              <h5>
+                <strong>No User To Display</strong>
+              </h5>
+            </div>
             <div class="card-body text-danger">
               <p class="card-text">
                 Start searching for Users and Click on{" "}
@@ -86,7 +91,11 @@ export class DisplayTable extends Component {
                       />
                       <div class="card-body">
                         <h5 class="card-title" style={{ fontSize: "30px" }}>
-                          <strong>{each.name}</strong>
+                          {each.name ? (
+                            <strong>{each.name}</strong>
+                          ) : (
+                            <b>No Name Specified</b>
+                          )}
                           <br />
                           <span
                             class="badge bg-dark text-light"
@@ -115,23 +124,44 @@ export class DisplayTable extends Component {
                           )}
                         </h5>
                         <p class="card-text">
-                          <button
-                            value={each.name}
-                            class="btn btn-success"
-                            onClick={(e) => {
-                              console.log("Viewing", e.target.value);
-                              this.setState(
-                                {
-                                  getRepoByName: e.target.value,
-                                },
-                                () => {
-                                  this.componentDidMount();
-                                }
-                              );
-                            }}
-                          >
-                            View Repositories
-                          </button>
+                          {each.name ? (
+                            <button
+                              value={each.name}
+                              class="btn btn-success"
+                              onClick={(e) => {
+                                console.log("Viewing", e.target.value);
+                                this.setState(
+                                  {
+                                    getRepoByName: e.target.value,
+                                  },
+                                  () => {
+                                    this.componentDidMount();
+                                  }
+                                );
+                              }}
+                            >
+                              View Repositories
+                            </button>
+                          ) : (
+                            <button
+                              value={each.name}
+                              class="btn btn-success"
+                              onClick={(e) => {
+                                console.log("Viewing", e.target.value);
+                                this.setState(
+                                  {
+                                    getRepoByName: e.target.value,
+                                  },
+                                  () => {
+                                    this.componentDidMount();
+                                  }
+                                );
+                              }}
+                              disabled
+                            >
+                              View Repositories
+                            </button>
+                          )}
                         </p>
                         {this.state.getRepoByName === each.name && (
                           <ul style={{ listStyle: "none" }}>
@@ -176,7 +206,10 @@ export class DisplayTable extends Component {
                                       </p>
                                       <hr />
                                       <small style={{ margin: "10px" }}>
-                                        Updated At:{e.updated_at}
+                                        Updated At:&nbsp;
+                                        {moment(each.created_at).format(
+                                          "dddd, MMMM Do YYYY, h:mm:ss a"
+                                        )}
                                       </small>
                                     </a>
                                   </div>
