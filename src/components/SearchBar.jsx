@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
-// import { ToastsContainer, ToastsStore } from "react-toasts";
 
 export class SearchBar extends Component {
   constructor(props) {
@@ -20,7 +19,6 @@ export class SearchBar extends Component {
   }
 
   async componentDidMount() {
-    // console.log("Search the Github API with ",this.state.parameter)
     if (this.state.parameter) {
       this.setState({
         isLoading: true,
@@ -38,7 +36,6 @@ export class SearchBar extends Component {
           userAfterSearch: false,
         });
       } else {
-        console.log("Data is now:", displayData);
         this.setState({
           isLoading: false,
           userNotFound: false,
@@ -60,22 +57,21 @@ export class SearchBar extends Component {
   }
 
   handleAdd = () => {
-    const { displayID, displayName,displayPic } = this.state;
-    var users=JSON.parse(localStorage.getItem("users") || "[]");
+    const { displayID, displayName, displayPic } = this.state;
+    var users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    users.forEach(function(user,index){
-      console.log("["+index+"]: "+user.id)
-    })
+    users.forEach(function (user, index) {
+      console.log("[" + index + "]: " + user.id);
+    });
 
-    var user={
+    var user = {
       id: displayID,
       name: displayName,
-      pic: displayPic
-    }
-    users.push(user)
-    console.log("Added User is:",user.id)
-
-    localStorage.setItem("users",JSON.stringify(users))
+      pic: displayPic,
+    };
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+    window.location.reload()
   };
 
   render() {
