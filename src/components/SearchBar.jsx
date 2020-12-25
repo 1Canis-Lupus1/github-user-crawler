@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
+// import { ToastsContainer, ToastsStore } from "react-toasts";
 
 export class SearchBar extends Component {
   constructor(props) {
@@ -57,10 +59,16 @@ export class SearchBar extends Component {
     }
   }
 
-  handleAdd=()=>{
-      const {displayID,displayName,displayPic,displayRepoCount,displayFollowers,displayFollowing}=this.state;
-      console.log("Adding Values to localstorage with key:",displayID,displayName,displayPic,displayRepoCount,displayFollowers,displayFollowing)
-  }
+  handleAdd = () => {
+    const { displayID, displayName } = this.state;
+    console.log(
+      "Adding Values to localstorage with key:",
+      displayID,
+      displayName
+    );
+    // ToastsStore.success("User Added To Display List")
+    // localStorage.setItem(`${displayID}`,`${displayName}`)
+  };
 
   render() {
     return (
@@ -116,7 +124,8 @@ export class SearchBar extends Component {
                         <u>Add To List</u>
                       </strong>{" "}
                       button for adding the current user to your{" "}
-                      <strong>Display Table</strong>.
+                      <strong>Display Table</strong> and view their{" "}
+                      <strong>First 5 Github Repositories</strong>.
                     </h5>
                   </div>
                 </div>
@@ -243,9 +252,29 @@ export class SearchBar extends Component {
                           )}
                         </li>
                         <div class="d-grid gap-2 col-6 mx-auto">
-                          <button class="btn btn-outline-success" onClick={this.handleAdd} type="button">
-                            Add To List
-                          </button>
+                          <div>
+                            <button
+                              class="btn btn-outline-success"
+                              onClick={() => {
+                                toast.success("User Added To List");
+                                this.handleAdd();
+                              }}
+                              type="button"
+                            >
+                              Add To List
+                            </button>
+                            <ToastContainer
+                              position="bottom-center"
+                              autoClose={5000}
+                              hideProgressBar={false}
+                              newestOnTop={false}
+                              closeOnClick
+                              rtl={false}
+                              pauseOnFocusLoss
+                              draggable
+                              pauseOnHover
+                            />
+                          </div>
                         </div>
                       </ul>
                     </p>
