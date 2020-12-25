@@ -25,7 +25,17 @@ export class DisplayTable extends Component {
   handleDelete = (id) => {
     console.log("Deleting by ID:", id);
     //Remove From LocalStorage Here
-    //window.location.reload()
+    let items = JSON.parse(localStorage.getItem("users"));
+    let newItems = items.filter((item) => {
+      var newArr = [];
+      if (item.id != id) {
+        console.log("In Statemennt:", item.id);
+        newArr.push(item);
+        return newArr;
+      }
+    });
+    localStorage.setItem("users",JSON.stringify(newItems))
+    window.location.reload()
   };
 
   render() {
