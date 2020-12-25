@@ -57,7 +57,7 @@ export class SearchBar extends Component {
   }
 
   handleAdd = () => {
-    const { displayID, displayName, displayPic } = this.state;
+    const { displayID, displayName, displayPic, displayFollowers, displayFollowing } = this.state;
     var users = JSON.parse(localStorage.getItem("users") || "[]");
 
     users.forEach(function (user, index) {
@@ -68,6 +68,8 @@ export class SearchBar extends Component {
       id: displayID,
       name: displayName,
       pic: displayPic,
+      followers: displayFollowers,
+      following: displayFollowing
     };
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
@@ -129,7 +131,7 @@ export class SearchBar extends Component {
                       </strong>{" "}
                       button for adding the current user to your{" "}
                       <strong>Display Table</strong> and view their{" "}
-                      <strong>First 5 Github Repositories</strong>.
+                      <strong>Github Repositories</strong>.
                     </h5>
                   </div>
                 </div>
