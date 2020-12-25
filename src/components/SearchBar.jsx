@@ -60,14 +60,22 @@ export class SearchBar extends Component {
   }
 
   handleAdd = () => {
-    const { displayID, displayName } = this.state;
-    console.log(
-      "Adding Values to localstorage with key:",
-      displayID,
-      displayName
-    );
-    // ToastsStore.success("User Added To Display List")
-    // localStorage.setItem(`${displayID}`,`${displayName}`)
+    const { displayID, displayName,displayPic } = this.state;
+    var users=JSON.parse(localStorage.getItem("users") || "[]");
+
+    users.forEach(function(user,index){
+      console.log("["+index+"]: "+user.id)
+    })
+
+    var user={
+      id: displayID,
+      name: displayName,
+      pic: displayPic
+    }
+    users.push(user)
+    console.log("Added User is:",user.id)
+
+    localStorage.setItem("users",JSON.stringify(users))
   };
 
   render() {
