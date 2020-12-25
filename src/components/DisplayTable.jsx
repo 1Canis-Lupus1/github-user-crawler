@@ -87,8 +87,32 @@ export class DisplayTable extends Component {
                       <div class="card-body">
                         <h5 class="card-title" style={{ fontSize: "30px" }}>
                           <strong>{each.name}</strong>
-                          <span>{each.followers}</span>
-                          <span>{each.following}</span>
+                          <br />
+                          <span
+                            class="badge bg-dark text-light"
+                            style={{ fontSize: "20px" }}
+                          >
+                            Followers
+                          </span>{" "}
+                          :{" "}
+                          {each.followers ? (
+                            <strong>{each.followers}</strong>
+                          ) : (
+                            <strong>N/A</strong>
+                          )}
+                          <br />
+                          <span
+                            class="badge bg-dark text-light"
+                            style={{ fontSize: "20px" }}
+                          >
+                            Following
+                          </span>{" "}
+                          :{" "}
+                          {each.following ? (
+                            <strong>{each.following}</strong>
+                          ) : (
+                            <strong>N/A</strong>
+                          )}
                         </h5>
                         <p class="card-text">
                           <button

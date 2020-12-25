@@ -57,7 +57,13 @@ export class SearchBar extends Component {
   }
 
   handleAdd = () => {
-    const { displayID, displayName, displayPic, displayFollowers, displayFollowing } = this.state;
+    const {
+      displayID,
+      displayName,
+      displayPic,
+      displayFollowers,
+      displayFollowing,
+    } = this.state;
     var users = JSON.parse(localStorage.getItem("users") || "[]");
 
     users.forEach(function (user, index) {
@@ -69,11 +75,11 @@ export class SearchBar extends Component {
       name: displayName,
       pic: displayPic,
       followers: displayFollowers,
-      following: displayFollowing
+      following: displayFollowing,
     };
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
-    window.location.reload()
+    window.location.reload();
   };
 
   render() {
