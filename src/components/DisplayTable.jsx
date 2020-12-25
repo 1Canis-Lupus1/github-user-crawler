@@ -6,12 +6,14 @@ export class DisplayTable extends Component {
     super(props);
     this.state = {
       userList: [],
+      getRepoByName:"",
+      RepoList: [],
+
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     var userArr = JSON.parse(localStorage.getItem("users"));
-    // console.log("The Users From Local Storage Are:",userArr)
     this.setState(
       {
         userList: userArr,
@@ -20,6 +22,17 @@ export class DisplayTable extends Component {
         // console.log("After Set State:",this.state.userList)
       }
     );
+    if(this.state.getRepoByName){
+        console.log("In Get Repo By Name",this.state.getRepoByName)
+        let userRepo= await fetch(`https://api.github.com/users/${this.state.getRepoByName.split(" ")[0]}/repos`)
+        let displayRepo=await userRepo.json()
+        // console.log(displayRepo)
+        this.setState({
+            RepoList: displayRepo
+        },()=>{
+            console.log("After Set State:",this.state.RepoList)
+        })
+    }
   }
 
   handleDelete = (id) => {
@@ -40,8 +53,8 @@ export class DisplayTable extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Displaying Added User Here</h2>
+      <div style={{margin:"80px"}}>
+        <h2 class="alert alert-info">My User List</h2>
         {this.state.userList.map((each) => {
           //   console.log("Each is:", each);
           return (
@@ -57,15 +70,28 @@ export class DisplayTable extends Component {
                         height: "200px",
                         width: "200px",
                         margin: "40px",
+                        border:"3px solid blue"
                       }}
                     />
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">{each.name}</h5>
                       <p class="card-text">
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
+                        <button value={each.name} onClick={(e)=>{
+                            console.log("Viewing",e.target.value)
+                            this.setState({
+                                getRepoByName: e.target.value
+                            },()=>{
+                                this.componentDidMount()
+                            })
+                        }}>View Repositories</button>
                       </p>
+                      {this.state.getRepoByName===each.name && (
+                          <ul>
+                              {this.state.RepoList.map(e=>{
+                                  return <li>{e.full_name}</li>
+                              })}
+                          </ul>
+                      )}
                     </div>
                     <div class="card-footer">
                       <button
