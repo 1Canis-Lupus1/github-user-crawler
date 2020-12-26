@@ -14,9 +14,16 @@ export class DisplayTable extends Component {
 
   async componentDidMount() {
     var userArr = JSON.parse(localStorage.getItem("users"));
-    this.setState({
-      userList: userArr,
-    });
+    console.log("Check 1:", userArr);
+    if (userArr === null) {
+      this.setState({
+        userList: [],
+      });
+    } else {
+      this.setState({
+        userList: userArr,
+      });
+    }
     if (this.state.getRepoByName) {
       console.log("In Get Repo By Name", this.state.getRepoByName);
       let userRepo = await fetch(
