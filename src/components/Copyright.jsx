@@ -12,7 +12,7 @@ export class Copyright extends Component {
               style={{ color: "red", fontSize: "20px" }}
             ></i>
           </i>{" "}
-          In India
+          In <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4FeFJWc3Vv6BE2hDaz6OnCdhs1_5mwLa8og&usqp=CAU" alt="INDIA" height="60px" width="80px" />
         </b>
         <br />
         <p style={{ marginTop: "20px" }}>
