@@ -133,7 +133,7 @@ export class DisplayTable extends Component {
                         <p class="card-text">
                           {each.name ? (
                             <button
-                              value={each.name}
+                              value={each.login}
                               class="btn btn-success"
                               onClick={(e) => {
                                 console.log("Viewing", e.target.value);
@@ -170,7 +170,7 @@ export class DisplayTable extends Component {
                             </button>
                           )}
                         </p>
-                        {this.state.getRepoByName === each.name && (
+                        {this.state.getRepoByName === each.login && (
                           <ul style={{ listStyle: "none" }}>
                             {this.state.RepoList.map((e, i) => {
                               return (

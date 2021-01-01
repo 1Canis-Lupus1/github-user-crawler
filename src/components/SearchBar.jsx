@@ -10,6 +10,7 @@ export class SearchBar extends Component {
       userNotFound: false,
       userAfterSearch: false,
       displayName: "",
+      loginName:"",
       displayID: "",
       displayPic: "",
       displayFollowers: 0,
@@ -29,6 +30,7 @@ export class SearchBar extends Component {
           .trim()}`
       );
       let displayData = await userData.json();
+      // console.log('Display Data:',displayData)
       if (displayData.message === "Not Found") {
         this.setState({
           isLoading: false,
@@ -41,6 +43,7 @@ export class SearchBar extends Component {
           userNotFound: false,
           userAfterSearch: true,
           displayName: displayData.name,
+          loginName:displayData.login,
           displayID: displayData.id,
           displayPic: displayData.avatar_url,
           displayRepoCount: displayData.public_repos,
@@ -60,6 +63,7 @@ export class SearchBar extends Component {
     const {
       displayID,
       displayName,
+      loginName,
       displayPic,
       displayFollowers,
       displayFollowing,
@@ -73,6 +77,7 @@ export class SearchBar extends Component {
     var user = {
       id: displayID,
       name: displayName,
+      login:loginName,
       pic: displayPic,
       followers: displayFollowers,
       following: displayFollowing,
